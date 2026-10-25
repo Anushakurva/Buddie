@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>moimoi</title>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+</head>
+<body>
+<main class="app">
+  <header class="hero" aria-label="moimoi">
+    <h1 class="logo">moimoi</h1>
+    <div class="blob green"><div class="eyes"><i class="eye"></i><i class="eye"></i></div><i class="mouth"></i></div>
+    <div class="blob pink"><div class="eyes"><i class="eye"></i><i class="eye"></i></div></div>
+    <div class="blob red"><div class="eyes"><i class="eye"></i><i class="eye"></i></div><i class="mouth"></i></div>
+    <div class="blob blue"><div class="eyes"><i class="eye"></i><i class="eye"></i></div><i class="mouth"></i></div>
+    <div class="blob yellow"><div class="eyes"><i class="eye"></i><i class="eye"></i></div><i class="mouth"></i></div>
+    <div class="blob orange"><div class="eyes"><i class="eye"></i><i class="eye"></i></div><i class="mouth"></i></div>
+  </header>
+
+  <section class="sheet">
+    <div id="auth">
+      <div class="tabs" role="tablist">
+        <button role="tab" id="tabLogin" aria-selected="true">Log in</button>
+        <button role="tab" id="tabSignup" aria-selected="false">Sign up</button>
+      </div>
+
+      <form id="login" novalidate>
+        <h2>Log in to get started</h2>
+        <div class="field"><label for="lPhone">Mobile number</label>
+          <div class="row"><span class="cc">+91</span><input id="lPhone" inputmode="numeric" autocomplete="tel-national" maxlength="10" placeholder="10-digit number"></div></div>
+        <div class="field"><label for="lPass">Password</label>
+          <div class="row"><input id="lPass" type="password" autocomplete="current-password" placeholder="Enter your password"><button type="button" data-show="lPass">Show</button></div></div>
+        <div class="msg" id="lMsg" role="alert"></div>
+        <button class="cta" type="submit">Log in</button>
+        <p class="switch">New here? <button type="button" id="toSignup">Create an account</button></p>
+      </form>
+
+      <form id="signup" novalidate hidden>
+        <h2>Create your account</h2>
+        <div class="field"><label for="sPhone">Mobile number</label>
+          <div class="row"><span class="cc">+91</span><input id="sPhone" inputmode="numeric" autocomplete="tel-national" maxlength="10" placeholder="10-digit number"></div></div>
+        <div class="field"><label for="sPass">Create password</label>
+          <div class="row"><input id="sPass" type="password" autocomplete="new-password" placeholder="At least 8 characters"><button type="button" data-show="sPass">Show</button></div></div>
+        <div class="field"><label for="sConf">Confirm password</label>
+          <div class="row"><input id="sConf" type="password" autocomplete="new-password" placeholder="Type it again"><button type="button" data-show="sConf">Show</button></div></div>
+        <div class="msg" id="sMsg" role="alert"></div>
+        <button class="cta" type="submit">Sign up</button>
+        <p class="switch">Already have an account? <button type="button" id="toLogin">Log in</button></p>
+      </form>
+    </div>
+
+    <div class="welcome" id="welcome" hidden>
+      <h3>Hello~ you’re in</h3>
+      <p id="who"></p>
+      <button class="cta" id="logout">Log out</button>
+    </div>
+  </section>
+</main>
+
+<div id="dash" hidden>
+<div class="dblobs" aria-hidden="true">
+  <div class="blob blue"><div class="eyes"><i class="eye"></i><i class="eye"></i></div><i class="mouth"></i></div>
+  <div class="blob pink"><div class="eyes"><i class="eye"></i><i class="eye"></i></div></div>
+  <div class="blob yellow"><div class="eyes"><i class="eye"></i><i class="eye"></i></div><i class="mouth"></i></div>
+</div>
+<div class="dwrap">
+  <header class="dhead"><div class="dlogo">moimoi</div><button class="ghost" id="dLogout">Log out</button></header>
+  <h1 class="dtitle">Your tags</h1>
+  <p class="dsub">Private spaces for notes, to-dos and photos. Each tag opens only with its own passcode.</p>
+  <div class="offb" id="offb" hidden>You’re offline. Everything still works, and messages send when you’re back online.</div>
+  <div class="tabs dtabs" role="tablist"><button role="tab" id="tabTags" aria-selected="true">Tags</button><button role="tab" id="tabChats" aria-selected="false">Chats</button></div>
+  <div id="pTags"><div id="grid" class="grid"></div></div>
+  <div id="pChats" hidden></div>
+</div>
+<button class="fab" id="fab" aria-label="Create a tag"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button></div>
+
+<dialog id="dCreate"><form id="fCreate" novalidate>
+  <h3>New tag</h3>
+  <div class="field"><label for="tName">Name</label><div class="row"><input id="tName" maxlength="24" placeholder="e.g. Trip plans"></div></div>
+  <label>Icon</label>
+  <div><span class="prev" id="prev"></span><button type="button" class="ghost" id="pickIcon">Browse all icons</button><span id="cats" hidden></span></div>
+  <div class="icons" id="icons"></div>
+  <div class="field"><div class="row" style="height:46px"><input id="tCustom" placeholder="Or paste any emoji here"></div></div>
+  <label>Colour</label><div class="colors" id="colors"></div>
+  <div class="field" style="margin-top:14px"><label for="tPass">Passcode (4–8 digits)</label><div class="row"><input id="tPass" type="password" inputmode="numeric" maxlength="8" autocomplete="off"></div></div>
+  <div class="field"><label for="tConf">Confirm passcode</label><div class="row"><input id="tConf" type="password" inputmode="numeric" maxlength="8" autocomplete="off"></div></div>
+  <div class="msg" id="tMsg" role="alert"></div>
+  <div class="btns"><button type="button" class="ghost" id="cCancel">Cancel</button><button class="cta" type="submit">Create tag</button></div>
+</form></dialog>
+
+<dialog id="dPick" class="big page">
+  <div class="dblobs" aria-hidden="true">
+    <div class="blob blue"><div class="eyes"><i class="eye"></i><i class="eye"></i></div><i class="mouth"></i></div>
+    <div class="blob pink"><div class="eyes"><i class="eye"></i><i class="eye"></i></div></div>
+    <div class="blob yellow"><div class="eyes"><i class="eye"></i><i class="eye"></i></div><i class="mouth"></i></div>
+  </div>
+  <div class="phead"><button type="button" class="ghost" id="pkBack">← Back</button></div>
+  <h3 id="pkTitle"></h3>
+  <div class="cats" id="pkCats"></div>
+  <div class="pkgrid" id="pkGrid"></div>
+  <button type="button" class="ghost" id="pkNone" hidden style="margin-top:16px">Remove sticker</button>
+</dialog>
+
+<dialog id="dPass"><form id="fPass" novalidate>
+  <h3 id="pTitle">Enter passcode</h3>
+  <div class="row"><input id="pInput" type="password" inputmode="numeric" maxlength="8" autocomplete="off" placeholder="Passcode"></div>
+  <div class="msg" id="pMsg" role="alert"></div>
+  <div class="btns"><button type="button" class="ghost" id="pCancel">Cancel</button><button class="cta" type="submit">Open</button></div>
+</form></dialog>
+
+<dialog id="dTag" class="big page">
+  <div class="dblobs" aria-hidden="true">
+    <div class="blob blue"><div class="eyes"><i class="eye"></i><i class="eye"></i></div><i class="mouth"></i></div>
+    <div class="blob pink"><div class="eyes"><i class="eye"></i><i class="eye"></i></div></div>
+    <div class="blob yellow"><div class="eyes"><i class="eye"></i><i class="eye"></i></div><i class="mouth"></i></div>
+  </div>
+  <div class="phead"><button type="button" class="ghost" id="vBack">← Back</button></div>
+  <h3><span class="prev" id="vIcon"></span><span id="vName"></span></h3>
+  <div class="secrow"><div class="sec">Notes</div><button type="button" class="mini" id="addNote" aria-label="Add note"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button></div>
+  <div id="notes"></div>
+  <div class="tray" id="tray"></div>
+  <button type="button" class="ghost" id="moreStk" style="margin-top:10px">More stickers</button>
+  <div class="hint">Tap a sticker to add it to the note you’re editing. Tap a sticker on a note to remove it.</div>
+  <div class="sec">To-do list</div>
+  <form id="fTodo" class="row" style="height:48px"><input id="todoIn" placeholder="Add a task" maxlength="120"><button type="submit" class="plusb" aria-label="Add task"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button></form>
+  <div id="todos"></div>
+  <div class="sec">Images</div>
+  <input type="file" id="imgIn" accept="image/*" multiple>
+  <div class="imgs" id="imgs"></div>
+  <div class="msg" id="vMsg" role="alert"></div>
+  <div class="btns"><button type="button" class="ghost danger" id="vDel">Delete tag</button><button type="button" class="cta" id="vLock">Lock</button></div>
+</dialog>
+
+<dialog id="dAdd"><form id="fAdd" novalidate>
+  <h3>Add contact</h3>
+  <div class="field"><label for="aPhone">Mobile number</label><div class="row"><span class="cc">+91</span><input id="aPhone" inputmode="numeric" maxlength="10" placeholder="10-digit number"></div></div>
+  <div class="field"><label for="aName">Name (optional)</label><div class="row"><input id="aName" maxlength="24"></div></div>
+  <div class="msg" id="aMsg" role="alert"></div>
+  <div class="btns"><button type="button" class="ghost" id="aCancel">Cancel</button><button class="cta" type="submit">Add contact</button></div>
+</form></dialog>
+
+<dialog id="dPlan">
+  <h3>Contact plans</h3>
+  <div class="msg err" id="plNote"></div>
+  <div class="plans" id="plans"></div>
+  <div class="msg" style="color:var(--muted)">Demo checkout: no real payment is taken.</div>
+  <div class="btns"><button type="button" class="ghost" id="plClose">Close</button></div>
+</dialog>
+
+<dialog id="dChat" class="big">
+  <h3><span id="cName"></span><br><small id="cNum" style="font-size:13px;font-weight:600;color:var(--muted)"></small></h3>
+  <div class="thread" id="cMsgs"></div>
+  <form id="fChat" class="row" style="height:52px"><input id="cIn" placeholder="Type a message" maxlength="500" autocomplete="off"><button type="submit">Send</button></form>
+  <div class="btns"><button type="button" class="ghost" id="cClose">Close</button></div>
+</dialog>
+
+<script src="js/dash.js"></script>
+<script src="js/chat.js"></script>
+<script src="js/auth.js"></script>
+</body>
+</html>
