@@ -1,8 +1,8 @@
-// Paste your own values from Firebase console > Project settings > Your apps > Web app.
-// These keys are safe to keep in Git. Your data is protected by firestore.rules.
 window.FIREBASE_CONFIG = {
-  apiKey: "PASTE_API_KEY",
-  authDomain: "PASTE_PROJECT_ID.firebaseapp.com",
-  projectId: "PASTE_PROJECT_ID",
-  appId: "PASTE_APP_ID"
+  apiKey: "AIzaSyDEOOHhMTWnP3lmKGE6lpTcqTSejgzxgJM",
+  authDomain: "buddie-6870f.firebaseapp.com",
+  projectId: "buddie-6870f",
+  storageBucket: "buddie-6870f.firebasestorage.app",
+  messagingSenderId: "260633492312",
+  appId: "1:260633492312:web:8b42cb0aa268e96653c32d"
 };
